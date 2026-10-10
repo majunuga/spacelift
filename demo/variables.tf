@@ -1,11 +1,11 @@
 variable "instance_count" {
+  description = "Number of Lightsail instances"
   type        = number
-  description = "The number of instances to provision"
-  default     = 1
+  default     = 3
 }
 
 variable "availability_zone" {
+  description = "Availability Zone"
   type        = string
-  description = "The availability zone of your instance"
   default     = "us-west-2a"
 }
