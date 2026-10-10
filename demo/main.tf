@@ -1,22 +1,38 @@
+terraform {
+  required_version = ">= 1.0"
+
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 5.0"
+    }
+  }
+}
+
 provider "aws" {
   region = "us-west-2"
 }
 
-#https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lightsail_instance
 resource "aws_lightsail_instance" "server" {
-  count             = var.instance_count
+  count = var.instance_count
+
   name              = "demo-${count.index + 1}"
   availability_zone = var.availability_zone
-  blueprint_id      = "ubuntu_22_04"
-  key_pair_name     = "id_rsa"
-  bundle_id         = "micro_3_0"
+
+  blueprint_id  = "ubuntu_22_04"
+  bundle_id     = "micro_3_0"
+  key_pair_name = "id_rsa"
+
   tags = {
     environment = "demo"
   }
+
   user_data = <<-EOF
 #!/bin/bash
-apt-add-repository ppa:ansible/ansible
-apt update
-apt install ansible -y
+apt update -y
+apt install -y software-properties-common
+add-apt-repository --yes ppa:ansible/ansible
+apt update -y
+apt install -y ansible
 EOF
 }
