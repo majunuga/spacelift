@@ -19,9 +19,8 @@ resource "aws_lightsail_instance" "server" {
   name              = "demo-${count.index + 1}"
   availability_zone = var.availability_zone
 
-  blueprint_id  = "ubuntu_22_04"
-  bundle_id     = "micro_3_0"
-  key_pair_name = "id_rsa"
+  blueprint_id = "ubuntu_22_04"
+  bundle_id    = "micro_3_0"
 
   tags = {
     environment = "demo"
